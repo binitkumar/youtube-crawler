@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150105031120) do
+ActiveRecord::Schema.define(version: 20150105070106) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20150105031120) do
     t.datetime "latest_video_published_at"
     t.text     "description"
     t.string   "country"
-    t.integer  "view_count"
+    t.integer  "view_count",                limit: 8
   end
 
   create_table "countaries", force: true do |t|

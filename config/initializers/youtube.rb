@@ -1,3 +1,4 @@
+WillPaginate.per_page = 20
 require 'google/api_client'
 
 DEVELOPER_KEY = 'AIzaSyA82Gg8TWg6I05NuDw8CzTgPmp6L5P3Bmk'

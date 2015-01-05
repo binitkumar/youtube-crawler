@@ -8,10 +8,10 @@
 			<div style="font-size: 0.8em;">
 				<ul class="sortlist pull-right">
 					<li><b>Sort: </b></li>
-					<li><a href="/home/results?id=<%= params[:id] %>&order=<%= params[:order] == "latest_video_published_at desc" ? "latest_video_published_at asc" : "latest_video_published_at desc" %>" >Newest Video</a></li>
-					<li><a href="/home/results?id=<%= params[:id] %>&order=<%= params[:order] == "subscriber_count desc" ? "subscriber_count asc" : "subscriber_count desc" %>" >Subscribers</a></li>
-					<li><a href="/home/results?id=<%= params[:id] %>&order=<%= params[:order] == "videos_count desc" ? "videos_count asc" : "videos_count desc" %>">Videos</a></li>
-					<li><a href="/home/results?id=<%= params[:id] %>&order=<%= params[:order] == "title desc" ? "title asc" : "title desc" %>">Name</a></li>
+					<li><a href="/home/results?page=<%= params[:page] %>&id=<%= params[:id] %>&order=<%= params[:order] == "latest_video_published_at desc" ? "latest_video_published_at asc" : "latest_video_published_at desc" %>" >Newest Video</a></li>
+					<li><a href="/home/results?page=<%= params[:page] %>&id=<%= params[:id] %>&order=<%= params[:order] == "subscriber_count desc" ? "subscriber_count asc" : "subscriber_count desc" %>" >Subscribers</a></li>
+					<li><a href="/home/results?page=<%= params[:page] %>&id=<%= params[:id] %>&order=<%= params[:order] == "videos_count desc" ? "videos_count asc" : "videos_count desc" %>">Videos</a></li>
+					<li><a href="/home/results?page=<%= params[:page] %>&id=<%= params[:id] %>&order=<%= params[:order] == "title desc" ? "title asc" : "title desc" %>">Name</a></li>
 
 				</ul>
 			</div>
@@ -56,8 +56,10 @@
 	<div class="row">
 		<div class="span12">
 			<div class="pagination">
-				<ul>
-				<li class="disabled"><a>prev</a></li><li class="disabled"><a>next</a></li>				</ul>
+                                <%= will_paginate @channels %>
+				<!--ul>
+				<li class="disabled"><a>prev</a></li><li class="disabled"><a>next</a></li>				
+                                </ul-->
 			</div>
 		</div>
 	</div>

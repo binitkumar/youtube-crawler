@@ -25,6 +25,7 @@ class HomeController < ApplicationController
       channels = Channel.all
       channels = channels.order( "#{params[:order]} " ) if params[:order]
       channels = channels.where(country: query.country) unless query.country == ""
+      channels = channels.where(category: query.category) unless query.category == ""
       channels = channels.where(" subscriber_count > ?", query.min_subscriber_count) unless query.min_subscriber_count.nil?
       channels = channels.where(" subscriber_count < ?", query.max_subscriber_count) unless query.max_subscriber_count.nil?
       channels = channels.where(" videos_count > ?", query.min_total_videos) unless query.min_total_videos.nil?
@@ -35,9 +36,9 @@ class HomeController < ApplicationController
       puts channels.inspect
       puts query.inspect      
       if query.name
-        @channels = channels.search(query.name)
+        @channels = channels.search(query.name).paginate(:page => params[:page])
       else
-        @channels = channels
+        @channels = channels.paginate(:page => params[:page])
       end
   end
 
@@ -46,6 +47,7 @@ class HomeController < ApplicationController
       channels = Channel.all
       channels = channels.order( "#{params[:order]} desc " ) if params[:order]
       channels = channels.where(country: query.country) unless query.country == ""
+      channels = channels.where(category: query.category) unless query.category == ""
       channels = channels.where(" subscriber_count > ?", query.min_subscriber_count) unless query.min_subscriber_count.nil?
       channels = channels.where(" subscriber_count < ?", query.max_subscriber_count) unless query.max_subscriber_count.nil?
       channels = channels.where(" videos_count > ?", query.min_total_videos) unless query.min_total_videos.nil?
