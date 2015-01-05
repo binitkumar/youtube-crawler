@@ -2,6 +2,7 @@
 	<div class="row">
 		<div class="span4">
 			<h3><%= @channels.count %> channels found!</h3>
+                        <%= link_to "Export to excel", "/home/export?id=#{params[:id]}", class: 'pull-right' %>
 		</div>
 		<div class="span6">
 			<div style="font-size: 0.8em;">
@@ -36,7 +37,7 @@
 			<small>
 				<%= channel.subscriber_count %> subscribers<br>
 				<%= channel.videos_count %> videos<br>
-				Joined: <%= channel.joinned_on.to_s(:long) %>				
+				Joined: <%= channel.joinned_on.try("to_s(:long)") %>				
 			</small>
 		</p>
 

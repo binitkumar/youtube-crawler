@@ -22,7 +22,7 @@ namespace :loader do
       }
       
       channels_ids_collection = channel_ids.collect{|x| x[:channelId] }.uniq
-      puts channels_ids_collection.join(", ")
+      Rails.logger.fatal channels_ids_collection.join(", ")
       channel_details = CLIENT.execute!(
         :api_method => YOUTUBE.channels.list,
         :parameters => {
@@ -54,7 +54,7 @@ namespace :loader do
             } 
           }
           channels_ids_collection = channel_ids.collect{|x| x[:channelId] }.uniq
-          puts channels_ids_collection.join(", ")
+          Rails.logger.fatal channels_ids_collection.join(", ")
           begin
           channel_details = CLIENT.execute!(
             :api_method => YOUTUBE.channels.list,
@@ -66,11 +66,11 @@ namespace :loader do
           
           channel_data += JSON.parse(channel_details.response.body)["items"]
           rescue => exp
-            puts channels_ids_collection.join(", ").inspect
-            puts exp.message
+            Rails.logger.fatal channels_ids_collection.join(", ").inspect
+            Rails.logger.fatal exp.message
           end
         rescue => exp
-          puts exp.message
+          Rails.logger.fatal exp.message
           @data["nextPageToken"] = nil
         end
       end
@@ -97,7 +97,7 @@ namespace :loader do
       
             if latest_video && latest_video["snippet"]["publishedAt"] && 60.days.ago < DateTime.parse(latest_video["snippet"]["publishedAt"])              
               channel = Channel.create(youtube_id: x["id"])
-              puts "Loading channel #{x["id"]}"
+              Rails.logger.fatal "Loading channel #{x["id"]}"
               channel.update_attributes(
                 country: cntry.code, 
                 title: x["snippet"]["title"], 
@@ -115,7 +115,7 @@ namespace :loader do
             end
           end
         rescue => exp
-          puts exp.message
+          Rails.logger.fatal exp.message
         end
       end 
     end 
