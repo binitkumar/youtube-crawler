@@ -26,7 +26,7 @@
 		<div class="span3" style="height: 220px;">
 		<h4>
 			<a title="<%= channel.title %>" target="_blank" href="http://www.youtube.com/channel/<%= channel.youtube_id %>"><%= channel.title %></a>
-			<img alt="<%= channel.country %>" title="<%= channel.country %>" src="/img/flags/gif/us1.gif">			
+			<img alt="<%= channel.country %>" title="<%= channel.country %>" src="/assets/flags/<%= channel.country %>.gif">			
 		</h4>
 
 		<small><b><%= translate_category(channel.category) %></b></small>
@@ -35,8 +35,8 @@
 		</a>			
 		<p>
 			<small>
-				<%= channel.subscriber_count %> subscribers<br>
-				<%= channel.videos_count %> videos<br>
+				<%= number_with_delimiter channel.subscriber_count %> subscribers<br>
+				<%= number_with_delimiter channel.videos_count %> videos<br>
 				Joined: <%= channel.joinned_on.try("to_s(:long)") %>				
 			</small>
 		</p>
