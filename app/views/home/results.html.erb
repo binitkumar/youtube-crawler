@@ -1,0 +1,78 @@
+<div class="container" id="main-content">
+	<div class="row">
+		<div class="span4">
+			<h3><%= @channels.count %> channels found!</h3>
+		</div>
+		<div class="span6">
+			<div style="font-size: 0.8em;">
+				<ul class="sortlist pull-right">
+					<li><b>Sort: </b></li>
+					<li><a href="/home/results?id=<%= params[:id] %>&order=latest_video_published_at">Newest Video</a></li>
+					<li><a href="/home/results?id=<%= params[:id] %>&order=subscriber_count">Subscribers</a></li>
+					<li><a href="/home/results?id=<%= params[:id] %>&order=videos_count">Videos</a></li>
+					<li><a href="/home/results?id=<%= params[:id] %>&order=joinned_on">Join Date</a></li>
+					<li><a href="/home/results?id=<%= params[:id] %>&order=title">Name</a></li>	
+				</ul>
+			</div>
+		</div>
+		<div class="span2 pull-right">
+			<a class="btn pull-right" href="/home/index">New Search</a>		
+                </div>
+	</div>
+		
+	<div class="row">			
+           <% @channels.each do |channel| %>
+		<div class="span3" style="height: 220px;">
+		<h4>
+			<a title="<%= channel.title %>" target="_blank" href="http://www.youtube.com/channel/<%= channel.youtube_id %>"><%= channel.title %></a>
+			<img alt="<%= channel.country %>" title="<%= channel.country %>" src="/img/flags/gif/us1.gif">			
+		</h4>
+
+		<!--small><b>News &amp; Politics</b></small-->
+		<a target="_blank" href="http://www.youtube.com/channel/<%= channel.youtube_id %>">
+			<img align="left" alt="" style="width: 80px; margin-right: 10px;" src="<%= channel.channel_image_url %>">
+		</a>			
+		<p>
+			<small>
+				<%= channel.subscriber_count %> subscribers<br>
+				<%= channel.videos_count %> videos<br>
+				Joined: <%= channel.joinned_on.to_s(:long) %>				
+			</small>
+		</p>
+
+		<p>
+			<small>
+				<b>Latest video:</b><br>
+				<a target="_blank" class="fancybox fancybox.iframe" id="fancybox" href="<%= channel.latest_video_link %>"><%= channel.latest_video_title %></a>				<br/>	
+				<%= time_ago_in_words( channel.latest_video_published_at ) if channel.latest_video_published_at %> ago
+			</small>
+		</p>
+		</div>
+
+            <% end %>
+	</div>
+		
+	<div class="row">
+		<div class="span12">
+			<div class="pagination">
+				<ul>
+				<li class="disabled"><a>prev</a></li><li class="disabled"><a>next</a></li>				</ul>
+			</div>
+		</div>
+	</div>
+		
+	<script charset="utf-8" type="text/javascript">
+		$(document).ready(function() {
+			$("#fancybox").fancybox( {
+				'autoDimensions': false,
+				'autoScale': false,
+				'width': 740,
+				'height': 460,
+				'autoSize':false,
+				'fitToView':false,
+				'type': 'iframe',
+				'padding': 5
+			});
+		});
+	</script>	
+</div>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>YoutubeCrawler</title>
+    <%= stylesheet_link_tag    'application' %>
+    <%= javascript_include_tag 'application' %>
+    <%= csrf_meta_tags %>
+    <link href="http://www.channelcrawler.com/favicon.ico" type="image/x-icon" rel="icon">
+    <link href="http://www.channelcrawler.com/favicon.ico" type="image/x-icon" rel="shortcut icon">
+  </head>
+
+  <body data-spy="scroll" id="index">
+    <div class="navbar navbar-fixed-top" id="home">
+      <div class="navbar-inner" style="background-position: 0px 100px;">
+        <div class="container">
+          <a href="<%= root_path %>" class="brand logo"><span class="hide">The YouTube ChannelCrawler</span></a>
+          <ul id="scrollnav" class="nav">
+            <li>Find thousands of undiscovered YouTube-channels!</li>
+          </ul>
+            
+          <ul class="secondary-nav">      	
+            <li><a target="_blank" title="Follow me on Twitter (Dutch)" href="http://www.twitter.com/TubeTotaal" class="social twitter gray"><span></span></a></li>
+            <li><a target="_blank" title="TubeTotaal op Facebook (Dutch)" href="http://www.facebook.com/TubeTotaal" class="social facebook gray"><span></span></a></li>
+            <li><a target="_blank" title="Subscribe to me on YouTube (Dutch)" href="http://www.youtube.com/TubeTotaal" class="social youtube gray"><span></span></a></li>
+          </ul>          
+
+        </div>
+      </div>
+    </div>
+
+
+
+    <div id="content">	
+      <%= yield %>
+      
+      <script>
+        $(function(){
+          $('#select_language').bind('change', function () {
+              var url = $(this).val(); // get selected value
+              if (url) { // require a URL
+                  window.location = url; // redirect
+              }
+              return false;
+          });
+        });
+      </script>
+    </div>
+
+    <div id="footer"></div>
+  </div>
+</div>
+</body>
+
+</html>

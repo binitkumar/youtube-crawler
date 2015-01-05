@@ -1,0 +1,105 @@
+    <div id="main-content" class="container">
+	<div class="row">		
+		<div class="span7wide offset1wide">   
+			<h1>The YouTube ChannelCrawler</h1>					
+	
+			<p style="margin-bottom: 15px;">There are millions of unknown and 
+undiscovered channels on YouTube. The YouTube ChannelCrawler makes it 
+easy to find them! Choose the category, the subscriber count and other 
+features, and the ChannelCrawler will find good YouTube channels for 
+you.</p>
+
+		</div>
+		<div class="span4">
+			<div class="newsletter" style="height: 120px; background-color: #fff;">
+				<h3>Search range</h3>
+				<p><label style="float: left; width: 70px;">Channels:</label> <%= Channel.count %></p>
+				<ul class="countrylist">
+					<li><a href="http://www.channelcrawler.com/"><img src="/assets/gb.png" alt="Find English speaking channels" title="Find English speaking channels"></a></li>
+					<li><a href="http://www.kanalfinder.de/"><img src="/assets/de.png" alt="Find German speaking channels" title="Find German speaking channels"></a></li>
+					<li><a href="http://www.tubetotaal.nl/"><img src="/assets/nl.png" alt="Find Dutch speaking channels" title="Find Dutch speaking channels"></a></li>
+				</ul>
+			</div>
+		</div>		
+	</div>
+	
+	<div class="row">
+      <div class="hero-unit">
+
+		<div class="container">
+	  		<form action="/home/search" class="form-horizontal" id="queryChannelsForm" method="post" accept-charset="utf-8">
+                                <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
+                                <div style="display:none;"><input name="_method" value="POST" type="hidden"></div>
+				<div class="row">
+
+					<div class="span6">
+					  <div class="control-group">
+					    <label class="control-label" for="inputVideos">Name</label>
+					    <div class="controls">
+					    	<input name="name" class="span3" id="queryName" type="text">					    </div>
+					  </div>
+					  <div class="control-group">
+					    <label class="control-label" for="inputGenre">Category</label>
+					    <div class="controls">
+							<select name="category_id" style="height: 30px;" id="queryCategoryId">
+                                                          <option selected="selected" value="">(choose a category)</option>
+                                                          <% @categories.each do |ctg|%>
+                                                              <option value="<%= ctg.code %>"><%= ctg.name %></option>
+                                                          <% end %>
+                                                        </select>					    </div>
+					  </div>
+					  <div class="control-group">
+					    <label class="control-label" for="inputLand">Country</label>
+					    <div class="controls">
+						    <select name="country_id" style="height: 30px;" id="queryCountryId">
+                                                      <option selected="selected" value="">(choose a country)</option>
+                                                      <% @countries.each do |cnt| %>
+                                                          <option value="<%= cnt.code %>"><%= cnt.name %></option>
+                                                      <% end %>
+                                                    </select>					    </div>
+					  </div>
+					  <div class="control-group">
+					    <label class="control-label" for="inputAbos">Subscribers</label>
+					    <div class="controls">
+					    	<input name="min_subs" class="span1" placeholder="Min." id="queryMinSubs" type="text">					    	<input name="max_subs" class="span1" placeholder="Max." id="queryMaxSubs" type="text">					    </div>
+					  </div>
+					</div>
+	
+					<div class="span5">
+					  <div class="control-group">
+					    <label class="control-label" for="inputAufrufe">Total views</label>
+					    <div class="controls">
+					       <input name="min_views" class="span1" placeholder="Min." id="queryMinViews" type="text">					    	                <input name="max_views" class="span1" placeholder="Max." id="queryMaxViews" type="text">					              </div>
+					  </div>
+					  <div class="control-group">
+					    <label class="control-label" for="inputVideos">Total videos</label>
+					    <div class="controls">
+					    <input name="videos" class="span1" placeholder="Min." id="queryVideos" type="text">					    </div>
+					  </div>
+					  <div class="control-group">
+					    <label class="control-label" for="inputVideos">Latest video</label>
+					    <div class="controls">
+							<input name="last_video_date" class="span1" placeholder="Max." id="queryLastVideoDate" type="text">					    	<span style="font-size: 0.8em;">days ago</span>
+					    </div>
+					  </div>
+					  <div class="control-group">
+					    <label class="control-label" for="inputVideos">Keywords</label>
+					    <div class="controls">
+					    	<input name="tags" class="span2" id="queryTags" type="text">					    </div>
+					  </div>
+					</div>
+
+			</div>
+
+			<div class="row">
+			
+				<div class="span11" style="text-align: center;">
+					<button type="submit" class="btn btn-primary btn-large">Search</button>					
+                                        <a href="http://www.channelcrawler.com/add" class="btn btn-large">Add Channel</a>				                         </div>
+			
+			</div>
+
+		</form>				
+	</div> <!-- /.container -->	
+
+</div>

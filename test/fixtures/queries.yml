@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  category: MyString
+  country: MyString
+  min_subscriber_count: 1
+  max_subscriber_count: 1
+  min_total_views: MyString
+  max_total_views: MyString
+  min_total_videos: 1
+  last_video_published: 2015-01-04 21:49:05
+  keywords: MyString
+
+two:
+  name: MyString
+  category: MyString
+  country: MyString
+  min_subscriber_count: 1
+  max_subscriber_count: 1
+  min_total_views: MyString
+  max_total_views: MyString
+  min_total_videos: 1
+  last_video_published: 2015-01-04 21:49:05
+  keywords: MyString
