@@ -77,39 +77,42 @@ namespace :loader do
       
       channel_data.each do |x|
         begin
-          video_results = CLIENT.execute!(
-            :api_method => YOUTUBE.search.list,
-            :parameters => {
-              :part => 'id, snippet',
-              :channelId => x["id"],
-              :maxResults => 5,
-              :order => "date",
-              :type => 'video',
-              :publishedAfter => DateTime.parse(60.days.ago.to_datetime.rfc3339(9))
-            }
-          )
-      
-          video_data = JSON.parse(video_results.response.body)
-          latest_video = video_data["items"].first
-      
-          if latest_video && latest_video["snippet"]["publishedAt"] && 60.days.ago < DateTime.parse(latest_video["snippet"]["publishedAt"])
-            channel = Channel.find_by_youtube_id(x["id"])
-
-            channel = Channel.create(youtube_id: x["id"]) unless channel
-            puts "Loading channel #{x["id"]}"
-            channel.update_attributes(
-              country: cntry.code, 
-              title: x["snippet"]["title"], 
-              description: x["snippet"]["description"],
-              channel_image_url: x["snippet"]["thumbnails"]["default"]["url"],
-              subscriber_count: x["statistics"]["subscriberCount"],
-              videos_count: x["statistics"]["videoCount"],
-              joinned_on: DateTime.parse(x["snippet"]["publishedAt"]),       
-              latest_video_title: latest_video["snippet"]["title"], 
-              latest_video_link: "https://www.youtube.com/watch?v=#{latest_video["id"]["videoId"]}", 
-              latest_video_id: latest_video["id"]["videoId"],
-              latest_video_published_at: latest_video["snippet"]["publishedAt"]
+          existing_channel = Channel.find_by_youtube_id(x["id"])
+          
+          unless existing_channel
+            video_results = CLIENT.execute!(
+              :api_method => YOUTUBE.search.list,
+              :parameters => {
+                :part => 'id, snippet',
+                :channelId => x["id"],
+                :maxResults => 5,
+                :order => "date",
+                :type => 'video',
+                :publishedAfter => DateTime.parse(60.days.ago.to_datetime.rfc3339(9))
+              }
             )
+      
+            video_data = JSON.parse(video_results.response.body)
+            latest_video = video_data["items"].first
+      
+            if latest_video && latest_video["snippet"]["publishedAt"] && 60.days.ago < DateTime.parse(latest_video["snippet"]["publishedAt"])              
+              channel = Channel.create(youtube_id: x["id"])
+              puts "Loading channel #{x["id"]}"
+              channel.update_attributes(
+                country: cntry.code, 
+                title: x["snippet"]["title"], 
+                description: x["snippet"]["description"],
+                channel_image_url: x["snippet"]["thumbnails"]["default"]["url"],
+                subscriber_count: x["statistics"]["subscriberCount"],
+                videos_count: x["statistics"]["videoCount"],
+                view_count: x["statistics"]["viewCount"],
+                joinned_on: DateTime.parse(x["snippet"]["publishedAt"]),       
+                latest_video_title: latest_video["snippet"]["title"], 
+                latest_video_link: "https://www.youtube.com/watch?v=#{latest_video["id"]["videoId"]}", 
+                latest_video_id: latest_video["id"]["videoId"],
+                latest_video_published_at: latest_video["snippet"]["publishedAt"]
+              )
+            end
           end
         rescue => exp
           puts exp.message
