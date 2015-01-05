@@ -40,3 +40,4 @@ gem 'spring',        group: :development
 gem 'google-api-client', '>0.7'
 gem 'spreadsheet'
 gem 'dusen'
+gem 'axlsx'
