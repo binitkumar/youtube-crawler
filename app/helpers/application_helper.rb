@@ -1,5 +1,6 @@
 module ApplicationHelper
   def  translate_category(code)
-    Categories.find_by_code(code).name
+    cateogory = Categories.find_by_code(code)
+    category ? category.name : ""
   end
 end
