@@ -23,7 +23,7 @@ class HomeController < ApplicationController
   def results
       query = Query.find params[:id]
       channels = Channel.all
-      channels = channels.order( "#{params[:order]} desc " ) if params[:order]
+      channels = channels.order( "#{params[:order]} " ) if params[:order]
       channels = channels.where(country: query.country) unless query.country == ""
       channels = channels.where(" subscriber_count > ?", query.min_subscriber_count) unless query.min_subscriber_count.nil?
       channels = channels.where(" subscriber_count < ?", query.max_subscriber_count) unless query.max_subscriber_count.nil?

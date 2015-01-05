@@ -6,12 +6,18 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-workbook = Spreadsheet.open("db/country_codes.xls")
-sheet1 = workbook.worksheet 0
 
 Countary.delete_all
-sheet1.each do |row|
-  Countary.create(name: row[0], code: row[2])
+country = CLIENT.execute!(
+      :api_method => YOUTUBE.i18n_regions.list,
+      :parameters => {
+        :part => 'id, snippet'
+      }
+    )
+
+country_data = JSON.parse(country.response.body)["items"]
+country_data.each do |cnt|
+  Countary.create(name: cnt["snippet"]["name"], code: cnt["id"])
 end
 
 puts "#{Countary.count} countries loaded."
