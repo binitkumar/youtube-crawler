@@ -1,7 +1,7 @@
 <div class="container" id="main-content">
 	<div class="row">
 		<div class="span4">
-			<h3><%= @channels.count %> channels found!</h3>
+			<h3><%= number_with_delimiter @channels.count %> channels found!</h3>
                         <%= link_to "Export to excel", "/home/export?id=#{params[:id]}", class: 'pull-right' %>
 		</div>
 		<div class="span6">

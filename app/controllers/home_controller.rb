@@ -34,7 +34,8 @@ class HomeController < ApplicationController
       channels = channels.where(" latest_video_published_at > ?", query.last_video_published.to_i.days.ago) unless query.last_video_published.nil?
   
       puts channels.inspect
-      puts query.inspect      
+      puts query.inspect    
+      params[:page] = 0 unless params[:page]  
       if query.name
         @channels = channels.search(query.name).paginate(:page => params[:page])
       else
