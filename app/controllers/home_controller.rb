@@ -35,7 +35,7 @@ class HomeController < ApplicationController
   
       puts channels.inspect
       puts query.inspect    
-      params[:page] = 0 unless params[:page]  
+      params[:page] = 1 if params[:page].to_i == 0  
       if query.name
         @channels = channels.search(query.name).paginate(:page => params[:page])
       else
